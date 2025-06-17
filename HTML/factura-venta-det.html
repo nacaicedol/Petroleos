@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalle Factura Venta</title>
+
+   <!-- Estilos -->
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+   body {
+  background: #eef2f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.detalle-container {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  max-width: 100%;
+}
+
+.grid-dos-columnas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.card {
+  font-size: 15px;
+  background: #f9fbfc;
+  padding: 20px 24px;
+  border-radius: 10px;
+  border: 1px solid #dbe3ea;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.card h4 {
+  margin-bottom: 14px;
+  color: #0c3c60;
+  font-size: 16px;
+  border-bottom: 1px solid #d0dce7;
+  padding-bottom: 6px;
+}
+
+.card p {
+  margin: 4px 0;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.acciones button {
+  background: #0d6efd;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
+  transition: background 0.3s ease;
+}
+
+.acciones button:hover {
+  background: #0b5ed7;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+}
+
+th, td {
+  padding: 10px 12px;
+  border: 1px solid #dee2e6;
+  text-align: center;
+}
+
+th {
+  background: #0c3c60;
+  color: #fff;
+  font-weight: 600;
+}
+
+td {
+  background-color: #fefefe;
+}
+
+.dataTables_wrapper .dataTables_filter {
+  float: right;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Modal PDF */
+#pdfModal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+#pdfModal .modal-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+#pdfModal iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+
+#pdfModal button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+  <div id="bannerContainer"></div>
+  <div class="detalle-container">
+
+    <!-- Info Empresa + Cliente -->
+    <div class="grid-dos-columnas">
+      <div class="card">
+        <h4>Información de la Empresa</h4>
+        <p><strong>PETRODECOL</strong></p>
+        <p>Dirección: CLL 45 #32-12 TERMINAL TERPEL BOCAS DEL PALO</p>
+        <p>Email: contacto@logisticasanjose.co</p>
+        <p>Vendedor: 901234567 - LOGÍSTICA SAN JOSÉ S.A.S.</p>
+      </div>
+      <div class="card">
+        <h4>Información de Factura</h4>
+        <p><strong>Factura:</strong> PDCL-1708</p>
+        <p><strong>Fecha Doc:</strong> 17-06-2025</p>
+        <p><strong>Vence:</strong> 17-06-2025</p>
+        <p><strong>Estado:</strong> Factura de Venta Cerrada</p>
+      </div>
+      
+    </div>
+
+    <!-- Info Factura + Totales -->
+    <div class="grid-dos-columnas">
+      <div class="card">
+        <h4>Factura a:</h4>
+        <p><strong>SANDOVAL PÉREZ CARLOS EDUARDO</strong></p>
+        <p>CARRERA 10 #23-45 BARRIO EL PRADO</p>
+        <p>PUERTO ASÍS, PUTUMAYO</p>
+        <p>Email: csandoval@clientes.com.co</p>
+      </div>
+      <div class="card">
+        <h4>Detalles pago</h4>
+        <p><strong>Sub Total:</strong> $1,200,000</p>
+        <p><strong>I.V.A:</strong> $228,000</p>
+        <p><strong>I.C.O:</strong> $0</p>
+        <p><strong>Total:</strong> $1,428,000</p>
+      </div>
+    </div>
+
+
+
+    <div class="acciones">
+      <button onclick="mostrarPDFModal()"><i class="fas fa-file-pdf"></i> Imprimir</button>
+    </div>
+
+    <table id="detalleFacturaTable">
+      <thead>
+        <tr>
+          <th>ITEM</th>
+          <th>PRODUCTO</th>
+          <th>LOTE</th>
+          <th>CANTIDAD</th>
+          <th>VALOR UNITARIO</th>
+          <th>VALOR TOTAL</th>
+          <th>% DESC.</th>
+          <th>$ DESC.</th>
+          <th>% IVA</th>
+          <th>$ IVA</th>
+          <th>$ RET. FTE</th>
+          <th>$ RET. ICA</th>
+          <th>$ RET. IVA</th>
+          <th>TOTAL (COP)</th>
+          <th>DESCRIPCIÓN</th>
+          <th>FECHA CREADA</th>
+          <th>FECHA MODIF.</th>
+          <th>USUARIO MODIF.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Diesel</td>
+          <td>123</td>
+          <td>100</td>
+          <td>$12,000</td>
+          <td>$1,200,000</td>
+          <td>0%</td>
+          <td>$0</td>
+          <td>19%</td>
+          <td>$228,000</td>
+          <td>$0</td>
+          <td>$0</td>
+          <td>$0</td>
+          <td>$1,428,000</td>
+          <td>Combustible para transporte</td>
+          <td>2025-06-13</td>
+          <td>2025-06-13</td>
+          <td>admin</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<!-- Modal de PDF con visor completo -->
+<div id="pdfModal" style="
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+">
+  <div style="
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    height: 90%;
+    overflow: hidden;
+  ">
+    <button onclick="cerrarPDFModal()" style="
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10000;
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    ">
+      Cerrar
+    </button>
+
+    <!-- El visor PDF: usa visor del navegador -->
+    <iframe
+      src="../Images/factura-venta.pdf"
+      style="width: 100%; height: 100%; border: none;"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="../JS/header.js"></script>
+  <script>
+    $(document).ready(() => {
+      $('#detalleFacturaTable').DataTable({
+        paging: false,
+        scrollX: true,
+        language: {
+          emptyTable: "No hay detalles para mostrar",
+          search: "Buscar:",
+          info: "Mostrando _TOTAL_ registros"
+        }
+      });
+    });
+
+    function mostrarPDFModal() {
+      document.getElementById("pdfModal").style.display = "flex";
+    }
+
+    function cerrarPDFModal() {
+      document.getElementById("pdfModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ingreso de Casos - Equal Tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="../CSS/pqrs.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f9fb;
+      margin: 0;
+    }
+    .form-container {
+      max-width: 960px;
+      background: #fff;
+      margin: auto;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 0;
+    }
+    h2 {
+      text-align: center;
+      color: #6c63ff;
+      margin-top: 0;
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+    p.subtext {
+      text-align: center;
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+    form {
+      display: grid;
+      gap: 20px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    label {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="datetime-local"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+    .form-actions {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: #0d6efd;
+      color: white;
+      align-self: start;
+    }
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+    .file-note {
+      font-size: 13px;
+      color: #555;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+  }
+
+  .chat-header {
+    background: #0d6efd;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chat-header i.toggle {
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .chat-body {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: block;
+  }
+
+  .chat-footer {
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 8px;
+  }
+
+  .chat-footer input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  .chat-footer button {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+
+  .minimized .chat-body,
+  .minimized .chat-footer {
+    display: none;
+  }
+  </style>
+</head>
+<body>
+  <div id="bannerContainer"></div>
+  <div class="form-container">
+    <h1>EQUAL TECH S.A.S</h1>
+    <h2>INGRESO DE CASOS MYPROCESS</h2>
+    <p class="subtext">Por favor diligencie el siguiente formulario para conocer su caso, le brindaremos una solución lo antes posible.</p>
+
+    <form>
+      <div>
+        <label>Correos separados por 'coma' para enviar en copia en la confirmación del Evento</label>
+        <textarea placeholder="correo1@ejemplo.com, correo2@ejemplo.com"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Programa a Reportar</label>
+          <select>
+            <option>Seleccione una opción</option>
+            <option>Ventas</option>
+            <option>Contabilidad</option>
+            <option>Inventario</option>
+          </select>
+        </div>
+        <div>
+          <label>Tipo Aplicativo myProcess *</label>
+          <select required>
+            <option>Seleccione una opción</option>
+            <option>Web</option>
+            <option>Escritorio</option>
+            <option>Móvil</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Resumen de la Solicitud</label>
+          <textarea></textarea>
+        </div>
+        <div>
+          <label>Detalle (Ampliar solicitud)</label>
+          <textarea></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Nombre contacto del caso</label>
+          <input type="text" />
+        </div>
+        <div>
+          <label>No. Whatsapp Contacto</label>
+          <input type="tel" />
+        </div>
+        <div>
+          <label>No. telefónico Contacto</label>
+          <input type="tel" />
+        </div>
+        <div>
+          <label>Fecha del Evento</label>
+          <input type="datetime-local" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Adjuntar Archivos</label>
+          <input type="file" accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
+        </div>
+        <div>
+          <label>Adjuntar Archivos</label>
+          <input type="file" accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
+        </div>
+      </div>
+
+      <p class="file-note">* El tamaño máximo permitido es 2 MB por cada Archivo y las extensiones permitidas son: *.jpg, *.png, *.pdf, *.doc, *.docx, *.xls, *.xlsx</p>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Enviar</button>
+      </div>
+    </form>
+  </div>
+
+   <script src="../JS/header.js"></script>
+  <script src="../JS/app.js"></script>
+  <script>
+  function enviarMensaje() {
+    const input = document.getElementById("chatInput");
+    const chat = document.getElementById("chatBody");
+    const mensaje = input.value.trim();
+    if (mensaje) {
+      const nuevo = document.createElement("p");
+      nuevo.innerHTML = `<strong>Tú:</strong> ${mensaje}`;
+      chat.appendChild(nuevo);
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
+    }
+  }
+
+  function toggleChat() {
+    const widget = document.getElementById("chatWidget");
+    const icon = document.getElementById("chatToggleIcon");
+
+    widget.classList.toggle("minimized");
+
+    // Cambiar ícono
+    if (widget.classList.contains("minimized")) {
+      icon.classList.remove("fa-minus");
+      icon.classList.add("fa-plus");
+    } else {
+      icon.classList.remove("fa-plus");
+      icon.classList.add("fa-minus");
+    }
+  }
+</script>
+
+</body>
+</html>

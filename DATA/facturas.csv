@@ -1,0 +1,21 @@
+Factura,Fecha,Cliente,Monto,Estado
+F1001,2025-06-01,Juan Pérez,1200000,Pendiente
+F1002,2025-06-03,Ana Gómez,950000,Pagada
+F1003,2025-06-04,Pedro Ruiz,1320000,Pendiente
+F1004,2025-06-05,Lina Torres,880000,Pagada
+F1005,2025-06-06,Miguel Rojas,1045000,Pendiente
+F1006,2025-06-07,Sara Martínez,1120000,Pagada
+F1007,2025-06-08,David Nieto,900000,Pendiente
+F1008,2025-06-09,Luis Vargas,980000,Pagada
+F1009,2025-06-10,Laura Ramírez,1000000,Pendiente
+F1010,2025-06-11,Jorge García,1100000,Pagada
+F1011,2025-06-12,Lucía Torres,950000,Pendiente
+F1012,2025-06-13,Andrés Pardo,970000,Pagada
+F1013,2025-06-14,María Rodríguez,1230000,Pagada
+F1014,2025-06-15,Tomás Díaz,1050000,Pendiente
+F1015,2025-06-16,Camila Suárez,940000,Pagada
+F1016,2025-06-17,Valentina López,1190000,Pendiente
+F1017,2025-06-18,Samuel Medina,1025000,Pagada
+F1018,2025-06-19,Daniel Herrera,1010000,Pendiente
+F1019,2025-06-20,Paula Vargas,960000,Pagada
+F1020,2025-06-21,Felipe Castaño,980000,Pendiente

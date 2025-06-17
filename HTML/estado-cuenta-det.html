@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resultado Estado de Cuenta - Petrodecol</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="../CSS/estado-cuenta.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    .table-responsive { overflow-x: auto; margin-top: 20px; }
+    .btn-print {
+      background-color: #0d6efd !important;  /* Azul Bootstrap */
+      color: white !important;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      
+    }
+
+    .print-preview {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .print-preview img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+
+    .accordion {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .accordion summary {
+      background-color: #f4f9fb;
+      padding: 12px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .accordion summary:hover {
+      background-color: #e8f0f7;
+    }
+
+    .tag {
+      background: #e0e0e0;
+      padding: 5px 10px;
+      border-radius: 12px;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+    .tag.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .imprimir-contenedor {
+  text-align: right;
+  margin-top: 10px;
+}
+
+  </style>
+</head>
+<body>
+  <div id="bannerContainer"></div>
+
+  <main class="estado-resultado-container">
+    <h2>Estado de Cuenta</h2>
+
+    <div class="tags">
+      <span class="tag">Estacion de servicio: 123 - Estación Centro</span>
+      <span class="tag success">Cartera Actual</span>
+    </div>
+
+    <!-- Botón imprimir -->
+    <div class="imprimir-contenedor">
+      <button class="btn-print" onclick="mostrarPDFModal()">
+        <i class="fas fa-print"></i> Imprimir
+      </button>
+    </div>
+    <!-- Imagen oculta de impresión -->
+    <div class="print-preview" id="printPreview">
+      <img src="../Images/estado-impresion.png" alt="Vista previa impresión">
+    </div>
+
+    <!-- Acordeón por proyecto -->
+    <details class="accordion" open>
+      <summary>Estacion de servicio: Estación Centro</summary>
+      <div class="table-responsive">
+        <table id="tablaEstadoCuenta" class="display">
+          <thead>
+            <tr>
+              <th>FECHA DOC</th>
+              <th>DOCUMENTO</th>
+              <th>DOCUMENTO ARL</th>
+              <th>SOPORTE DOC ARL</th>
+              <th>FECHA MOV</th>
+              <th>CONCEPTO</th>
+              <th>VALOR GENERAL</th>
+              <th>VALOR DÉBITO</th>
+              <th>VALOR CRÉDITO</th>
+              <th>SALDO DOCUMENTO</th>
+              <th>SALDO OTRA MONEDA</th>
+              <th>CUOTA NRO</th>
+              <th>MONEDA</th>
+              <th>VENCIMIENTO</th>
+              <th>CUENTA</th>
+              <th>ESTACIONS DE SERVICIO</th>
+              <th>NIT</th>
+              <th>TERCERO</th>
+              <th>VENDEDOR</th>
+              <th>SOPORTE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>12/06/2024</td>
+              <td>FC-001</td>
+              <td>ARL-233</td>
+              <td>SUP-ARL-001</td>
+              <td>13/06/2024</td>
+              <td>Producto Diesel</td>
+              <td>$1,200,000</td>
+              <td>$0</td>
+              <td>$1,200,000</td>
+              <td>$1,200,000</td>
+              <td>$0</td>
+              <td>1</td>
+              <td>COP</td>
+              <td>20/06/2024</td>
+              <td>340123</td>
+              <td>123 - Estación Centro</td>
+              <td>900123456</td>
+              <td>Petrodecol</td>
+              <td>PoliTech</td>
+              <td><a href="#">Ver</a></td>
+            </tr>
+            <tr>
+              <td>10/05/2024</td>
+              <td>FC-002</td>
+              <td>ARL-234</td>
+              <td>SUP-ARL-002</td>
+              <td>11/05/2024</td>
+              <td>Gasolina Extra</td>
+              <td>$950,000</td>
+              <td>$50,000</td>
+              <td>$900,000</td>
+              <td>$900,000</td>
+              <td>$0</td>
+              <td>2</td>
+              <td>COP</td>
+              <td>20/05/2024</td>
+              <td>340124</td>
+              <td>123 - Estación Centro</td>
+              <td>900123456</td>
+              <td>Petrodecol</td>
+              <td>Juan Pérez</td>
+              <td><a href="#">Ver</a></td>
+            </tr>
+            <tr>
+              <td>15/04/2024</td>
+              <td>FC-003</td>
+              <td>ARL-235</td>
+              <td>SUP-ARL-003</td>
+              <td>16/04/2024</td>
+              <td>Lubricante</td>
+              <td>$500,000</td>
+              <td>$0</td>
+              <td>$500,000</td>
+              <td>$500,000</td>
+              <td>$0</td>
+              <td>1</td>
+              <td>COP</td>
+              <td>25/04/2024</td>
+              <td>340125</td>
+              <td>123 - Estación Centro</td>
+              <td>900123456</td>
+              <td>Petrodecol</td>
+              <td>Maria López</td>
+              <td><a href="#">Ver</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </main>
+
+    <div id="pdfModal" class="pdf-modal">
+  <div class="pdf-modal-content">
+    <span class="close-btn" onclick="cerrarPDFModal()">&times;</span>
+    <iframe src="../Images/estado-cuenta.pdf" frameborder="0"></iframe>
+  </div>
+</div>
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="../JS/header.js"></script>
+  <script>
+    $(document).ready(() => {
+      $('#tablaEstadoCuenta').DataTable({
+        paging: true,
+        scrollX: true,
+        language: {
+          search: "Buscar:",
+          lengthMenu: "Mostrar _MENU_ registros",
+          info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+          paginate: {
+            previous: "Anterior",
+            next: "Siguiente"
+          }
+        }
+      });
+    });
+
+    function mostrarImpresion() {
+      const preview = document.getElementById('printPreview');
+      preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
+    }
+    function mostrarPDFModal() {
+  document.getElementById("pdfModal").style.display = "flex";
+}
+
+function cerrarPDFModal() {
+  document.getElementById("pdfModal").style.display = "none";
+}
+
+  </script>
+</body>
+</html>

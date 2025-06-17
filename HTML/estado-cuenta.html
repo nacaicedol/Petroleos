@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estado de Cuenta - Petrodecol</title>
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="../CSS/estado-cuenta.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <div id="bannerContainer"></div>
+
+  <div class="estado-cuenta-container">
+    <h2>Buscar Estado de Cuenta</h2>
+
+    <form>
+      <div class="form-grid">
+        <div>
+          <label for="tipoCartera">Tipo de cartera</label>
+          <select id="tipoCartera">
+            <option>Todos los Documentos</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="tercero">Tercero</label>
+          <input type="text" id="tercero" value="Petrodecol" disabled />
+        </div>
+
+        <div>
+          <label for="tipoDocumento">Tipo de Documento</label>
+          <select id="tipoDocumento">
+            <option>Seleccione un Tipo de Documento</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="documento">Documento</label>
+          <input type="text" id="documento" placeholder=" " />
+        </div>
+
+        <div>
+          <label for="cuenta">Cuenta</label>
+          <select id="cuenta">
+            <option>Seleccione una Cuenta</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="proyecto">Estaciones de servicio</label>
+          <select id="proyecto">
+            <option>Todas las estaciones de servicio</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="orden">Ordenar por</label>
+          <select id="orden">
+            <option>Más reciente</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="options">
+        <div class="radio-group">
+          <label><input type="radio" name="cartera" checked> Cartera Actual</label>
+          <label><input type="radio" name="cartera"> Histórico de Cartera</label>
+        </div>
+      </div>
+
+      <div class="checkboxes">
+        <label><input type="checkbox"> Organizado por Documento de Pago</label>
+        <label><input type="checkbox"> Agrupar por estacion de servicio</label>
+        <label><input type="checkbox" checked> Incluir abonos</label>
+      </div>
+
+      <div class="buttons">
+        <div>
+          <button type="button" class="btn btn-primary" onclick="window.location.href='estado-cuenta-det.html'">Buscar</button>
+          <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </div>
+        <button type="button" class="btn btn-danger"><i class="fas fa-print"></i> Imprimir</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="../JS/header.js"></script>
+</body>
+</html>

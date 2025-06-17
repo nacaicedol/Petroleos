@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedidos - Petrodecol</title>
+
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    .contenedor-pedidos {
+      padding: 20px;
+    }
+
+    .acciones-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+
+    .acciones-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      background: #e3f2fd;
+      color: #0d6efd;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag.success { background-color: #d1e7dd; color: #0f5132; }
+    .tag.danger { background-color: #f8d7da; color: #842029; }
+    .tag.warning { background-color: #fff3cd; color: #664d03; }
+    .tag.secondary { background-color: #e2e3e5; color: #41464b; }
+
+    .tag .close-tag {
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .acciones-right {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .acciones-right button,
+    .btn-buscar {
+      background: #6c63ff;
+      color: white;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .acciones-right button:hover,
+    .btn-buscar:hover {
+      background: #5a52cc;
+    }
+
+    .table-responsive {
+      margin-top: 20px;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    td i.fas {
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+
+    td i.fas:hover {
+      transform: scale(1.2);
+    }
+
+    .form-busqueda {
+      display: none;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .form-row label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-row input,
+    .form-row select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .submit-row {
+      text-align: right;
+      margin-top: 20px;
+    }
+    .modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  max-width: 900px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: modalFade 0.3s ease-out;
+}
+
+@keyframes modalFade {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #003366;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#formPedido label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+  color: #333;
+}
+
+#formPedido input,
+#formPedido select,
+#formPedido textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+#formPedido .btn-agregar {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#formPedido .btn-agregar:hover {
+  background: #0b5ed7;
+}
+
+  </style>
+</head>
+<body>
+  <div id="bannerContainer"></div>
+
+  <main class="contenedor-pedidos">
+    <h2>Pedidos</h2>
+
+    <div class="acciones-top" id="accionesTop">
+      <div class="acciones-right">
+        <button class="btn-buscar" onclick="mostrarFormulario()"><i class="fas fa-search"></i> Buscar Pedido</button>
+        <button onclick="mostrarModal()"><i class="fas fa-plus" ></i> Nuevo Pedido</button>
+        <button><i class="fas fa-file-excel"></i> Importar desde Excel</button>
+      </div>
+
+      <div class="acciones-left">
+        <span class="tag success">Captura<button class="close-tag" onclick="this.parentElement.remove()">&times;</button></span>
+        <span class="tag warning">Confirmado<button class="close-tag" onclick="this.parentElement.remove()">&times;</button></span>
+        <span class="tag danger">Liberado<button class="close-tag" onclick="this.parentElement.remove()">&times;</button></span>
+        <span class="tag secondary">Anulado<button class="close-tag" onclick="this.parentElement.remove()">&times;</button></span>
+        <span class="tag secondary">Cerrado<button class="close-tag" onclick="this.parentElement.remove()">&times;</button></span>
+      </div>
+    </div>
+
+    <div class="form-busqueda" id="formBusqueda">
+      <h3>Buscar Pedidos</h3>
+      <form id="formBuscar">
+        <div class="form-row">
+          <div><label>Fecha Inicial</label><input type="date" id="fechaInicial" value="2025-05-17"></div>
+          <div><label>Fecha Final</label><input type="date" id="fechaFinal" value="2025-06-17"></div>
+          <div><label>Desde</label><input type="text" id="desdePedido"></div>
+          <div><label>Hasta</label><input type="text" id="hastaPedido"></div>
+          <div><label>Orden de compra</label><input type="text" id="ordenCompra"></div>
+          <div><label>Estado</label><select id="estado"><option value="">Seleccione un Estado</option><option value="Abierto">Abierto</option><option value="Confirmado">Confirmado</option><option value="Liberado">Liberado</option><option value="Anulado">Anulado</option><option value="Cerrado">Cerrado</option></select></div>
+          <div><label>Tercero</label><select id="tercero"><option value="">Seleccione un Cliente</option><option value="Petrodecol">Petrodecol</option></select></div>
+          <div><label>Cantidad a buscar</label><select id="cantidad"><option>10</option><option>25</option><option>50</option><option>100</option></select></div>
+        </div>
+        <div class="submit-row">
+          <button type="button" class="btn-buscar" id="btnBuscarPedidos"><i class="fas fa-search"></i> Aceptar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="table-responsive" id="tablaPedidosContainer">
+      <table id="tablaPedidos">
+        <thead>
+          <tr>
+            <th>Acciones</th>
+            <th>Pedido</th>
+            <th>Estado</th>
+            <th>Tipo Pedido</th>
+            <th>Fecha Pedido</th>
+            <th>Identificación</th>
+            <th>Nombre Del Tercero</th>
+            <th>Asignado</th>
+            <th>Despacho</th>
+            <th>Bodega</th>
+            <th>Orden de compra</th>
+            <th>Forma de Pago</th>
+            <th>F. Despacho</th>
+            <th>Subtotal</th>
+            <th>Total I.V.A.</th>
+            <th>Total Pedido</th>
+            <th>Moneda</th>
+            <th>Causal</th>
+            <th>Despacho</th>
+            <th>Agente</th>
+            <th>Creado por</th>
+            <th>Capturado por</th>
+            <th>Confirmado por</th>
+            <th>Liberado por</th>
+            <th>Ciudad</th>
+            <th>Causa estado</th>
+            <th>Descripción</th>
+            <th>Dirección Entrega</th>
+            <th>Nombre Punto Despacho</th>
+            <th>Nombre Contacto</th>
+            <th>Telefono Contacto</th>
+            <th>Email Contacto</th>
+            <th>Dirección Tercero</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><i class="fas fa-eye" style="color:#0d6efd; cursor:pointer" onclick="window.location.href='pedido-det.html'"></i> <i class="fas fa-print" style="color:#28a745; cursor:pointer" onclick="mostrarPDFModal()"></i></td>
+            <td>PD-1001</td><td>Confirmado</td><td>Online</td><td>2025-06-17</td><td>901234567</td><td>Petrodecol</td>
+            <td>Juan</td><td>Tumaco</td><td>Bog01</td><td>OC-234</td><td>Contado</td><td>2025-06-18</td>
+            <td>10,000,000</td><td>1,600,000</td><td>11,600,000</td><td>COP</td><td>Entrega</td><td>Tumaco</td>
+            <td>Pedro</td><td>admin</td><td>soporte</td><td>coordinador</td><td>supervisor</td>
+            <td>Bogotá</td><td>Pago Pendiente</td><td>Pedido urgente</td>
+            <td>Calle 10 #20-30</td><td>Principal</td><td>Luis Torres</td>
+            <td>3216549870</td><td>ltorres@cliente.com</td><td>Calle 11 #21-30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+    <!-- Modal Formulario Pedido -->
+<div id="modalPedido" class="modal">
+  <div class="modal-content">
+    <button class="close-modal" onclick="cerrarModal()">×</button>
+    <h3>Crear Pedido</h3>
+    <form id="formPedido">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <div><label>Tipo de Pedido (*)</label><input type="text" value="MERCANCÍA EN CONSIGNACIÓN" disabled /></div>
+        <div><label>Cliente (*)</label><input type="text" id="tercero" value="Petrodecol" disabled /></div>
+        <div><label>Fecha (*)</label><input type="date" value="2025-06-17" /></div>
+        <div><label>Sucursal (*)</label><input type="text" value="OFICINA PRINCIPAL" disabled /></div>
+        <div><label>Orden de Compra</label><input type="text" /></div>
+        <div><label>Forma de Pago (*)</label><select><option>Seleccione una Forma de Pago</option></select></div>
+        <div><label>Tipo Despacho (*)</label><select><option>Despacho Completo</option></select></div>
+        <div><label>Fecha Despacho</label><input type="date" value="2025-06-17" /></div>
+        <div><label>Entregar en</label><input type="text" value="RECOGE CLIENTE (ENTREGA DIRECTA EN BODEGA)" /></div>
+        <div style="display:flex; align-items:center; gap: 10px;">
+          <input type="checkbox" /> <label style="margin: 0;">Por Transportadora</label>
+        </div>
+        <div style="display:flex; align-items:center; gap: 10px;">
+          <input type="checkbox" /> <label style="margin: 0;">Recoge el Cliente</label>
+        </div>
+        <div><label>Bodega (*)</label><select><option>Seleccione una Bodega</option></select></div>
+        <div><label>Moneda (*)</label><select><option>COP - PESO COLOMBIANO</option></select></div>
+        <div><label>Vendedor (*)</label><select><option>Seleccione un Agente</option></select></div>
+        <div style="grid-column: 1 / -1;"><label>Descripción</label><textarea rows="3"></textarea></div>
+      </div>
+      <div style="text-align: right; margin-top: 20px;">
+        <button class="btn-agregar" type="submit">Aceptar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+  <div id="pdfModal" style="display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999;">
+    <div style="position: relative; background: white; border-radius: 8px; width: 90%; height: 90%; overflow: hidden;">
+      <button onclick="cerrarPDFModal()" style="position: absolute; top: 10px; right: 10px; background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer;">Cerrar</button>
+      <iframe src="../Images/factura-venta.pdf" style="width:100%; height:100%; border:none;"></iframe>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="../JS/header.js"></script>
+  <script>
+    let tablaPedidos;
+
+    function mostrarFormulario() {
+      document.getElementById("formBusqueda").style.display = "block";
+      document.getElementById("tablaPedidosContainer").style.display = "none";
+      document.querySelector(".acciones-right").style.display = "none";
+      document.querySelector(".acciones-left").style.display = "none";
+    }
+
+    function mostrarPDFModal() {
+      document.getElementById("pdfModal").style.display = "flex";
+    }
+
+    function cerrarPDFModal() {
+      document.getElementById("pdfModal").style.display = "none";
+    }
+        function mostrarModal() {
+      document.getElementById("modalPedido").style.display = "flex";
+    }
+
+    function cerrarModal() {
+      document.getElementById("modalPedido").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      tablaPedidos = $('#tablaPedidos').DataTable({
+        scrollX: true,
+        paging: true,
+        responsive: true,
+        language: {
+          search: "Buscar:",
+          lengthMenu: "Mostrar _MENU_ registros",
+          info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+          emptyTable: "No hay pedidos disponibles.",
+          paginate: {
+            previous: "Anterior",
+            next: "Siguiente"
+          }
+        }
+      });
+
+      document.getElementById("btnBuscarPedidos").addEventListener("click", () => {
+        const desde = document.getElementById("desdePedido").value.toLowerCase();
+        const hasta = document.getElementById("hastaPedido").value.toLowerCase();
+
+        tablaPedidos.rows().every(function () {
+          const data = this.data();
+          const pedido = data[1].toLowerCase();
+
+          const desdeOk = !desde || pedido >= desde;
+          const hastaOk = !hasta || pedido <= hasta;
+
+          if (desdeOk && hastaOk) {
+            $(this.node()).show();
+          } else {
+            $(this.node()).hide();
+          }
+        });
+
+        tablaPedidos.draw(false);
+        document.getElementById("formBusqueda").style.display = "none";
+        document.getElementById("tablaPedidosContainer").style.display = "block";
+        document.querySelector(".acciones-right").style.display = "flex";
+        document.querySelector(".acciones-left").style.display = "flex";
+      });
+    });
+  </script>
+</body>
+</html>

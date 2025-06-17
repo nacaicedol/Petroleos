@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cliente - Petrodecol</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="../CSS/cliente.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="bannerContainer"></div>
+
+  <div class="menu-toggle" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <div class="container">
+    <!-- Menú lateral -->
+    <div class="sidebar collapsed" id="sidebar">
+
+      <ul>
+        <li><br></li>
+        <li><br></li>
+        <li><a href="#" onclick="showTab('finanzas')"><i class="fas fa-chart-line"></i><span class="menu-text"> Finanzas</span></a></li>
+        <li><a href="#" onclick="showTab('facturacion')"><i class="fas fa-file-invoice"></i><span class="menu-text"> Facturación</span></a></li>
+        <li><a href="#" onclick="showTab('pedidos')"><i class="fas fa-box"></i><span class="menu-text"> Pedidos</span></a></li>
+        <li><a href="#" onclick="showTab('pagos')"><i class="fas fa-credit-card"></i><span class="menu-text"> Pagos</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+      <div id="facturacion" class="tab-panel">
+        <h2>Facturación</h2>
+        <table id="tablaFacturas" class="display"></table>
+        <div class="factura-detalle hidden" id="detalleFactura">
+          <h3>Detalle de Factura</h3>
+          <input type="text" id="detalleId" placeholder="ID" readonly>
+          <input type="date" id="detalleFecha">
+          <input type="text" id="detalleCliente" placeholder="Cliente">
+          <input type="text" id="detalleMonto" placeholder="Monto">
+          <input type="text" id="detalleEstado" placeholder="Estado">
+          <button onclick="guardarFactura()" class="action-btn">Guardar</button>
+        </div>
+        <canvas id="graficoFacturas" height="100"></canvas>
+      </div>
+
+      <div id="pedidos" class="tab-panel hidden">
+        <h2>Pedidos</h2>
+        <label>Filtrar por:</label>
+        <select>
+          <option>Cliente</option>
+          <option>Estación</option>
+        </select>
+        <table id="tablaPedidos" class="display"></table>
+      </div>
+
+      <div id="pagos" class="tab-panel hidden">
+        <h2>Portal de Pagos</h2>
+        <input type="text" placeholder="Número de tarjeta">
+        <input type="text" placeholder="Nombre en la tarjeta">
+        <input type="month" placeholder="Vencimiento">
+        <button class="action-btn">Realizar Pago</button>
+      </div>
+
+      <div id="finanzas" class="tab-panel hidden">
+        <h2>Finanzas</h2>
+        <div class="cards">
+          <div class="card"><h3>Estado de Cuenta</h3><p>$2.340.000</p></div>
+          <div class="card"><h3>Crédito</h3><p>Límite: $5.000.000</p><p>Disponible: $2.660.000</p></div>
+          <div class="card"><h3>Facturación Electrónica</h3><button class="action-btn">Consultar</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="../JS/header.js"></script>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+    }
+
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(el => el.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+
+    function showFacturaDetalle(row) {
+      document.getElementById("detalleFactura").classList.remove("hidden");
+      document.getElementById("detalleId").value = row[0];
+      document.getElementById("detalleCliente").value = row[2];
+      document.getElementById("detalleMonto").value = row[3];
+      document.getElementById("detalleEstado").value = row[4];
+      document.getElementById("detalleFecha").value = row[1];
+    }
+
+    function guardarFactura() {
+      alert("Factura actualizada correctamente.");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("../DATA/facturas.csv")
+        .then(res => res.text())
+        .then(csv => {
+          const lines = csv.trim().split("\n").slice(1);
+          const data = lines.map(line => {
+            const cols = line.split(",");
+            cols.push(`
+              <div class="actions">
+                <i class="fas fa-eye" title="Ver" onclick='showFacturaDetalle(["${cols.join('","')}"])'></i>
+                <i class="fas fa-pen" title="Editar"></i>
+                <i class="fas fa-trash" title="Eliminar"></i>
+              </div>
+            `);
+            return cols;
+          });
+
+          $('#tablaFacturas').DataTable({
+            data: data,
+            columns: [
+              { title: 'ID' },
+              { title: 'Fecha' },
+              { title: 'Cliente' },
+              { title: 'Monto' },
+              { title: 'Estado' },
+              { title: 'Acciones', orderable: false }
+            ],
+            paging: true
+          });
+        });
+
+      const ctx = document.getElementById('graficoFacturas');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr'],
+          datasets: [{
+            label: 'Facturación mensual',
+            data: [1200000, 1500000, 1100000, 1300000],
+            backgroundColor: '#0d6efd'
+          }]
+        }
+      });
+    });
+  </script>
+</body>
+</html>

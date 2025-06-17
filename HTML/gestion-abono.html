@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Abonos - Petrodecol</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f9fb;
+      margin: 0;
+
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #003366;
+      margin-bottom: 20px;
+    }
+    .acciones-top {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .acciones-top button {
+      background: #6c63ff;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .acciones-top button:hover {
+      background: #5a52cc;
+    }
+    .estado-tag {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .activo { background: #d1e7dd; color: #0f5132; }
+    .cerrado { background: #cfe2ff; color: #084298; }
+    .suspendido { background: #fff3cd; color: #664d03; }
+    .anulado { background: #f8d7da; color: #842029; }
+    .dian { background: #e2e3e5; color: #343a40; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #dee2e6;
+      text-align: center;
+    }
+    th {
+      background: #003366;
+      color: white;
+    }
+    .correcta {
+      background-color: #d1e7dd !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="bannerContainer"></div>
+  <div class="container">
+    <h2>Recibos de Caja</h2>
+
+    <div class="acciones-top">
+      <button><i class="fas fa-plus"></i> Agregar Documento Contable</button>
+      <button><i class="fas fa-file-excel"></i> Cargar desde Excel</button>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+      <span class="estado-tag activo">Documento Activo</span>
+      <span class="estado-tag cerrado">Documento Cerrado</span>
+      <span class="estado-tag suspendido">Documento Suspendido</span>
+      <span class="estado-tag anulado">Documento Anulado</span>
+      <span class="estado-tag dian">Enviado a la DIAN</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>TIPO DOC</th>
+          <th>DOCUMENTO</th>
+          <th>FECHA</th>
+          <th>NOMBRE DE TERCERO</th>
+          <th>DESCRIPCIÓN</th>
+          <th>DÉBITOS</th>
+          <th>CRÉDITOS</th>
+          <th>MON</th>
+          <th>TRI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="correcta">
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>FNE</td><td>26598</td><td>2025-06-12</td><td>GUAYALRES SAS</td>
+          <td>Factura creada a partir del pedido 883</td><td>1,219,279.50</td><td>1,219,279.50</td><td>COP</td><td>1,219,279.50</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>FPS</td><td>47</td><td>2025-06-10</td><td>ASAM SAS</td>
+          <td>FPS-47</td><td>5,950.00</td><td>5,950.00</td><td>COP</td><td>5,950.00</td>
+        </tr>
+        <tr >
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>FP</td><td>450</td><td>2025-06-09</td><td>EQUAL TECH SAS</td>
+          <td>Ajuste inventario</td><td>22,600.00</td><td>22,600.00</td><td>COP</td><td>22,600.00</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>FP</td><td>449</td><td>2025-06-09</td><td>EQUAL TECH SAS</td>
+          <td>Ajuste inventario</td><td>22,600.00</td><td>22,600.00</td><td>COP</td><td>22,600.00</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>DCM</td><td>2</td><td>2025-05-31</td><td>ASAM SAS</td>
+          <td>PRUEBA</td><td>60,187,200.91</td><td>60,187,200.91</td><td>COP</td><td>4,300,000.00</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>DCM</td><td>1</td><td>2025-06-08</td><td>ASAM SAS</td>
+          <td>PRUEBA</td><td>56,192,385.91</td><td>56,192,385.91</td><td>COP</td><td>4,300,000.00</td>
+        </tr>
+        <tr >
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>CEE</td><td>13</td><td>2025-06-07</td><td>VAST GATE LIMITED</td>
+          <td>PAGO</td><td>2,125,000.00</td><td>2,125,000.00</td><td>USD</td><td>500.000</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>CEE</td><td>14</td><td>2025-06-06</td><td>INVERCOMEX</td>
+          <td>Abono parcial</td><td>3,000.00</td><td>2,000.00</td><td>USD</td><td>1,000.00</td>
+        </tr>
+        <tr class="correcta">
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>DCM</td><td>15</td><td>2025-06-05</td><td>INDUSTRIAS LUZ</td>
+          <td>Saldo cancelado</td><td>100,000.00</td><td>100,000.00</td><td>COP</td><td>100,000.00</td>
+        </tr>
+        <tr >
+          <td><i class="fas fa-pen"></i> <i class="fas fa-eye"></i></td>
+          <td>FNE</td><td>999</td><td>2025-06-04</td><td>CONSTRUAGRO</td>
+          <td>Factura completa</td><td>50,000.00</td><td>50,000.00</td><td>COP</td><td>50,000.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="../JS/header.js"></script>
+</body>
+</html>

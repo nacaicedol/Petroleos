@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </a>
       </div>
 
+      
       <nav class="nav-icons">
         <ul class="nav-links">
           <li><a href="dashboard.html" title="Inicio"><i class="fas fa-home"></i></a></li>

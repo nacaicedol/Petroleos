@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <li><a href="estado-cuenta.html" title="Estado de Cuenta"><i class="fas fa-file-alt"></i></a></li>
           <li><a href="pedidos.html" title="Pedidos"><i class="fas fa-box"></i></a></li>
           <li><a href="factura-venta.html" title="Factura Venta"><i class="fas fa-file-invoice-dollar"></i></a></li>
-          <li><a href="notificacion-abono.html" title="Notificación de Abono"><i class="fas fa-bell"></i></a></li>
+          <!-- <li><a href="notificacion-abono.html" title="Notificación de Abono"><i class="fas fa-bell"></i></a></li>  -->  
           <li><a href="pqrs.html" title="PQRS"><i class="fas fa-envelope-open-text"></i></a></li>
         </ul>
       </nav>
